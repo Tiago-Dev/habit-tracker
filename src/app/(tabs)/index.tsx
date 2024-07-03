@@ -1,24 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import HabitItem from '@/components/HabitItem';
 import OptionItem from '@/components/OptionItem';
 import useHabits from '@/hooks/useHabits';
-import { IHabit } from '@/models/habit'; 
+import { IHabit } from '@/models/habit';
 import { habits } from '@/MOCKS/habits';
 import Header from '@/components/Header';
-
 
 const HomeScreen: React.FC = () => {
   const { top } = useSafeAreaInsets();
   const { selectedOption, activeHabits, completedHabits, handleOptionSelect, handleCheckIn } = useHabits({ initialHabits: habits });
 
   const renderActiveItem = ({ item }: { item: IHabit }) => <HabitItem habit={item} onCheckIn={handleCheckIn} />;
-  const renderCompletedItem = ({ item }: { item: IHabit }) => <HabitItem habit={item} isCompletedList={true}/>; 
+  const renderCompletedItem = ({ item }: { item: IHabit }) => <HabitItem habit={item} isCompletedList={true} />;
 
   return (
-    <View style={[styles.container, { paddingTop: top }]}>
+    <ScrollView contentContainerStyle={[styles.container, { paddingTop: top }]}>
       <Header title="Home" />
       <View style={styles.optionsContainer}>
         <OptionItem
@@ -57,13 +56,13 @@ const HomeScreen: React.FC = () => {
           />
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff',
     padding: 20,
   },
